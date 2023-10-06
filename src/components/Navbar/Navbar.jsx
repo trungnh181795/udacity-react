@@ -12,7 +12,9 @@ function ResponsiveAppBar() {
   const navigate = useNavigate()
 
   const handleOnSubmit = (value) => {
-    navigate(`/search?q=${value}`)
+    if (value) {
+      navigate(`/search?q=${value}`)
+    }
   }
 
   return (

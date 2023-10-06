@@ -38,7 +38,10 @@ const Search = () => {
 
     useEffect(() => {
         const searchQuery = location?.search?.replace('?q=', '')
-        handleSearch(searchQuery)
+
+        if (searchQuery) {
+            handleSearch(searchQuery)
+        }
     }, [])
 
     useEffect(() => {
@@ -50,9 +53,11 @@ const Search = () => {
     return (
         <Box sx={{ width: '100%', height: '100%' }}>
             <Stack direction="row" alignItems="center" justifyContent="center" sx={{ width: '100%', height: '100%' }}>
-                <IconButton onClick={() => navigate(-1)} sx={{ bgcolor: 'info.main', mr: '8px', '&:hover': {
-                    bgcolor: 'info.dark'
-                } }}>
+                <IconButton onClick={() => navigate(-1)} sx={{
+                    bgcolor: 'info.main', mr: '8px', '&:hover': {
+                        bgcolor: 'info.dark'
+                    }
+                }}>
                     <ArrowBackIcon />
                 </IconButton>
                 <SearchBox onChange={handleOnChange} />
@@ -75,7 +80,7 @@ const Search = () => {
                 {loading ? <Loading /> : books.length > 0 ? (
                     <Grid spacing={4} container sx={{ width: '100%' }}>
                         {books?.map(book => (
-                            <Grid key={book.id} item xs={12} md={6} lg={3} sx={{ mb: '8px'}}>
+                            <Grid key={book.id} item xs={12} md={6} lg={3} sx={{ mb: '8px' }}>
                                 <BookCard book={book} />
                             </Grid>
                         ))}
