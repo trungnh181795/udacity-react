@@ -6,8 +6,8 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import DirectionsIcon from '@mui/icons-material/Directions';
 
-export default function SearchBox({ onChange, onSubmit }) {
-    const [value, setValue] = React.useState('')
+export default function SearchBox({ onChange, onSubmit, defaultValue = '' }) {
+    const [value, setValue] = React.useState(defaultValue)
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
@@ -30,12 +30,13 @@ export default function SearchBox({ onChange, onSubmit }) {
             onSubmit={handleOnSubmit}
         >
             <InputBase
+                value={value}
                 onChange={handleOnChange}
                 sx={{ ml: 1, flex: 1 }}
                 placeholder="Search books"
                 inputProps={{ 'aria-label': 'search books' }}
             />
-            <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+            <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
                 <SearchIcon />
             </IconButton>
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />

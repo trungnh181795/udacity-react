@@ -12,7 +12,8 @@ const Search = () => {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const location = useLocation()
-    const [value, setValue] = useState('')
+    const searchQuery = location?.search?.replace('?q=', '')
+    const [value, setValue] = useState(searchQuery)
     const [maxResult, setMaxResult] = useState(12)
     const [books, setBooks] = useState([])
 
@@ -37,12 +38,10 @@ const Search = () => {
     }
 
     useEffect(() => {
-        const searchQuery = location?.search?.replace('?q=', '')
-
         if (searchQuery) {
             handleSearch(searchQuery)
         }
-    }, [])
+    }, [searchQuery])
 
     useEffect(() => {
         if (debouncedSearchQuery) {
@@ -60,7 +59,7 @@ const Search = () => {
                 }}>
                     <ArrowBackIcon />
                 </IconButton>
-                <SearchBox onChange={handleOnChange} />
+                <SearchBox defaultValue={debouncedSearchQuery} onChange={handleOnChange} />
                 <FormControl sx={{ ml: '8px', width: '100px' }}>
                     <InputLabel id="demo-simple-select-label">Max result</InputLabel>
                     <Select
@@ -80,7 +79,7 @@ const Search = () => {
                 {loading ? <Loading /> : books.length > 0 ? (
                     <Grid spacing={4} container sx={{ width: '100%' }}>
                         {books?.map(book => (
-                            <Grid key={book.id} item xs={12} md={6} lg={3} sx={{ mb: '8px' }}>
+                            <Grid key={book.id} item xs={12} md={6} lg={3} sx={{ mb: '16px' }}>
                                 <BookCard book={book} />
                             </Grid>
                         ))}

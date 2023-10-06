@@ -24,6 +24,10 @@ const options = [
     {
         value: 'currentlyReading',
         label: 'Currently reading',
+    },
+    {
+        value: undefined,
+        label: 'None',
     }
 ]
 

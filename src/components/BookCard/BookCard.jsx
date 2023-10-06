@@ -3,7 +3,7 @@ import React from "react";
 import BookControlSelector from "../BookControlSelector/BookControlSelector";
 
 const BookCard = ({ book, getBook }) => {
-  const { shelf, imageLinks: { smallThumbnail }, id, authors, title } = book
+  const { id, authors, title } = book
 
   const handleOnClick = (e) => {
     if (e.target.closest("a")) {
@@ -33,7 +33,7 @@ const BookCard = ({ book, getBook }) => {
       position: 'relative'
     }}>
       <Box sx={{ flex: 1, height: '175px', minHeight: '175px', mb: '8px' }}>
-        <img src={smallThumbnail} alt={title} style={{ height: '100%', objectFit: 'contain' }} />
+        <img src={book?.imageLinks?.smallThumbnail} alt={title} style={{ height: '100%', objectFit: 'contain' }} />
       </Box>
       <Typography variant="h6" component="h3" sx={{
         flex: 1, display: '-webkit-box',
@@ -45,10 +45,10 @@ const BookCard = ({ book, getBook }) => {
         {title}
       </Typography>
       <Typography variant="body" component="span" sx={{ flex: 1 }}>
-        {authors.join(', ')}
+        {authors && authors.length ? authors?.join(', ') : 'Updating...'}
       </Typography>
       {getBook ? <Box sx={{ position: 'absolute', bottom: '-10px', right: '-10px' }} onClick={handleOnClick}>
-        <BookControlSelector getBook={getBook} id={id} currentShelf={shelf} />
+        <BookControlSelector getBook={getBook} id={id} currentShelf={book?.shelf} />
       </Box> : null}
     </Paper>
   );

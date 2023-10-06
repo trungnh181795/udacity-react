@@ -19,9 +19,11 @@ const BookDetail = () => {
 
     return (
         <Box sx={{ width: '100%', height: '100%' }}>
-            <IconButton onClick={() => navigate(-1)} sx={{ bgcolor: 'info.main', mr: '8px', '&:hover': {
-                bgcolor: 'info.dark'
-            } }}>
+            <IconButton onClick={() => navigate(-1)} sx={{
+                bgcolor: 'info.main', mr: '8px', '&:hover': {
+                    bgcolor: 'info.dark'
+                }
+            }}>
                 <ArrowBackIcon />
             </IconButton>
             <Stack direction="column" alignItems="center" justifyContent="center" sx={{ width: '100%', height: '100%' }}>
@@ -37,7 +39,7 @@ const BookDetail = () => {
                                 {book?.title}
                             </Typography>
                             <Typography variant="body2" fontWeight={400} component="span" color="grey">
-                                {book?.authors?.join(', ')}
+                                {book?.authors && book?.authors.length ? book?.authors?.join(', ') : 'Updating...'}
                             </Typography>
                             <Divider />
                             <Typography variant="subtitle1" fontWeight={400} component="span" sx={{
