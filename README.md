@@ -2,9 +2,16 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### Project description
 
-In the project directory, you can run:
+In the MyReads project, I'll create a bookshelf app that allows I to select and categorize books I have read, are currently reading, or want to read. The project emphasizes using React to build the application and provides an API server and client library that I will use to persist information as I interact with the application.
+### Available Scripts
+
+In the project directory, I can run:
+
+### `npm install` or `yarn install`
+
+Install required packages to start project
 
 ### `npm start` or `yarn start`
 
@@ -40,10 +47,7 @@ Instead, it will copy all the configuration files and the transitive dependencie
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
 ### Routes:
+
 / : homepage
 /book/id : book detail
 /search: search page
-
-### Project description
-
-In the MyReads project, you'll create a bookshelf app that allows you to select and categorize books you have read, are currently reading, or want to read. The project emphasizes using React to build the application and provides an API server and client library that you will use to persist information as you interact with the application.

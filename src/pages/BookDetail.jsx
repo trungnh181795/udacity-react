@@ -15,7 +15,7 @@ const BookDetail = () => {
     useEffect(() => {
         setLoading(true)
         get(params?.id).then(data => setBook(data)).finally(() => setLoading(false))
-    }, [])
+    }, [params])
 
     return (
         <Box sx={{ width: '100%', height: '100%' }}>

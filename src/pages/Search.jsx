@@ -1,10 +1,10 @@
 import { Box, FormControl, Grid, IconButton, InputLabel, MenuItem, Select, Stack, Typography } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import SearchBox from '../components/SearchBox';
 import { useDebounce } from '../hooks/use-debounce';
-import { search } from '../api/books';
+import { getAll, search } from '../api/books';
 import Loading from '../components/Loading/Loading';
 import BookCard from '../components/BookCard/BookCard';
 
@@ -16,6 +16,7 @@ const Search = () => {
     const [value, setValue] = useState(searchQuery)
     const [maxResult, setMaxResult] = useState(12)
     const [books, setBooks] = useState([])
+    const [ownedBook, setOwnedBook] = useState([])
 
     const debouncedSearchQuery = useDebounce(value, 300)
 
@@ -23,31 +24,32 @@ const Search = () => {
         setValue(newValue)
     }
 
-    const handleSearch = async (query) => {
+    const handleSearch = useCallback(async (query) => {
         setLoading(true)
-        await search(query, maxResult).then(data => {
-            if (data?.length > 0) {
-                setBooks(data)
-                return
-            }
-
-            setBooks(data?.items)
-            return
-        })
+        const [ownedBooks, searchedBooks] = await Promise.all([getAll(), search(query, maxResult)])
         setLoading(false)
-    }
+
+        setBooks(searchedBooks?.length ? searchedBooks?.map(sb => {
+            const ownedBook = ownedBooks.find(b => b.id === sb.id)
+
+            return ownedBook ? {
+                ...sb,
+                shelf: ownedBook.shelf
+            } : sb
+        }) : [])
+    }, [maxResult])
 
     useEffect(() => {
         if (searchQuery) {
             handleSearch(searchQuery)
         }
-    }, [searchQuery])
+    }, [searchQuery, handleSearch])
 
     useEffect(() => {
         if (debouncedSearchQuery) {
             handleSearch(debouncedSearchQuery, maxResult)
         }
-    }, [debouncedSearchQuery, maxResult])
+    }, [debouncedSearchQuery, maxResult, handleSearch])
 
     return (
         <Box sx={{ width: '100%', height: '100%' }}>
@@ -80,7 +82,7 @@ const Search = () => {
                     <Grid spacing={4} container sx={{ width: '100%' }}>
                         {books?.map(book => (
                             <Grid key={book.id} item xs={12} md={6} lg={3} sx={{ mb: '16px' }}>
-                                <BookCard book={book} />
+                                <BookCard getBook={() => handleSearch(debouncedSearchQuery)} book={book} />
                             </Grid>
                         ))}
                     </Grid>
